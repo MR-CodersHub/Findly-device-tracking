@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Findly - Enterprise Device Tracking & Asset Management Platform. Real-time hardware inventory, customer leases, security tracking, and diagnostics.">
+  <title>Findly | Enterprise Device Tracking & Asset Management Console</title>
+
+  <!-- Google Fonts - Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="theme-dark">
+
+  <!-- ==========================================
+       1. LOGIN INTERFACE (AUTHENTICATION SCREEN)
+       ========================================== -->
+  <div id="login-container" class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Left: Decorative Illustration & Branding -->
+      <div class="login-illustration">
+        <div class="illustration-overlay"></div>
+        <div class="illustration-content">
+          <div class="logo-badge">
+            <i data-lucide="cpu"></i> Findly
+          </div>
+          <h2>Enterprise Device Tracking & Asset Management Platform</h2>
+          <p>Real-time hardware inventory, customer leases, security tracking, and equipment diagnostics from one
+            unified console.</p>
+        </div>
+
+        <!-- Interactive Animated UI Elements (CSS Nodes) -->
+        <div class="animated-nodes-container">
+          <div class="node pulse-node node-1"></div>
+          <div class="node node-2"></div>
+          <div class="node node-3"></div>
+          <svg class="node-line-svg">
+            <line x1="10%" y1="20%" x2="50%" y2="60%" class="drawing-line"></line>
+            <line x1="50%" y1="60%" x2="80%" y2="30%" class="drawing-line"></line>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right: Credentials Input Forms -->
+      <div class="login-form-area">
+        <div class="form-header">
+          <h1>Findly Asset Console</h1>
+          <p>Login to track and manage your hardware devices and assets.</p>
+        </div>
+
+        <form id="login-form" class="credentials-form">
+          <!-- Validation Alerts Box -->
+          <div id="login-error-msg" class="validation-alert-box" style="display: none;">
+            <i data-lucide="alert-circle"></i>
+            <span id="error-text">Incorrect credentials. Try again.</span>
+          </div>
+
+          <div class="form-field-group">
+            <label for="login-username">Email Address / Mobile Number</label>
+            <div class="input-icon-wrapper">
+              <i data-lucide="mail" class="input-icon"></i>
+              <input type="text" id="login-username" placeholder="e.g. admin@findly.com" autocomplete="username">
+            </div>
+          </div>
+
+          <div class="form-field-group">
+            <div class="password-label-row">
+              <label for="login-password">Password</label>
+              <a href="#" class="forgot-link"
+                onclick="alert('Forgot Password feature is simulated. Enter any email and password matching validation rules to login.')">Forgot
+                Password?</a>
+            </div>
+            <div class="input-icon-wrapper">
+              <i data-lucide="lock" class="input-icon"></i>
+              <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+              <button type="button" class="password-toggle-btn" id="password-toggle"
+                aria-label="Toggle Password Visibility">
+                <i data-lucide="eye" class="eye-open-icon"></i>
+                <i data-lucide="eye-off" class="eye-closed-icon" style="display: none;"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-utility-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="login-remember">
+              <span class="custom-checkbox"></span>
+              Keep me logged in
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit">
+            <span id="btn-login-text">Sign In to Asset Console</span>
+            <div class="btn-spinner" id="login-spinner" style="display: none;"></div>
+          </button>
+        </form>
+
+        <div class="social-login-separator">
+          <span>Or sign in with</span>
+        </div>
+
+        <div class="social-login-grid">
+          <button class="social-btn" onclick="alert('Social login simulated.')">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                fill="#4285F4" />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853" />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                fill="#FBBC05" />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                fill="#EA4335" />
+            </svg> Google
+          </button>
+          <button class="social-btn" onclick="alert('Social login simulated.')">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path
+                d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
+            </svg> Facebook
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================
+       2. MAIN APPLICATION PLATFORM (POST-LOGIN)
+       ========================================== -->
+  <div id="app-container" class="app-wrapper" style="display: none;">
+
+    <!-- Compact Mobile Header -->
+    <header class="mobile-header" id="mobile-header">
+      <div class="mobile-nav-left">
+        <a href="#" class="mobile-nav-logo">
+          <div class="mobile-logo-icon-wrapper">
+            <i data-lucide="cpu" class="mobile-logo-icon"></i>
+          </div>
+          <span class="mobile-logo-text">Findly</span>
+        </a>
+      </div>
+      <div class="mobile-nav-center">
+        <span class="mobile-page-title" id="mobile-page-title">Tracking</span>
+      </div>
+      <div class="mobile-nav-right">
+        <button class="mobile-header-action-btn" id="mobile-notification-btn" aria-label="Notifications"
+          title="Notifications">
+          <i data-lucide="bell"></i>
+          <span class="alert-badge" id="mobile-notification-badge">3</span>
+        </button>
+        <button class="mobile-header-action-btn profile-avatar-btn" id="mobile-profile-btn" aria-label="Theme Settings"
+          title="Toggle Theme">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=256&auto=format&fit=crop"
+            alt="Profile" class="mobile-profile-avatar">
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar-top" id="navbar-top">
+      <div class="nav-left">
+        <a href="#" class="nav-logo">
+          <div class="logo-icon-wrapper">
+            <i data-lucide="cpu" class="logo-icon" style="transform:none;"></i>
+          </div>
+          <span class="logo-text">Findly</span>
+        </a>
+      </div>
+
+      <nav class="nav-center-menu">
+        <a href="#" class="nav-menu-item active" data-tab="live-tracking">
+          <i data-lucide="monitor"></i>
+          <span>Device Tracking</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="devices">
+          <i data-lucide="cpu"></i>
+          <span>Devices</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="customers">
+          <i data-lucide="users"></i>
+          <span>Customers</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="history">
+          <i data-lucide="clipboard-list"></i>
+          <span>Device History</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="alerts">
+          <i data-lucide="bell"></i>
+          <span>Alerts & Notifications</span>
+          <span class="alert-badge" id="sidebar-alert-badge">3</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="settings">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="nav-right">
+        <!-- Connection Status Indicator -->
+        <div id="connection-status" class="connection-status-pill offline">
+          <span class="status-dot"></span>
+          <span id="connection-status-text">Offline</span>
+        </div>
+
+        <div class="nav-divider"></div>
+
+        <!-- Light/Dark Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle-app" aria-label="Toggle Dark/Light Mode">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+
+        <div class="nav-divider"></div>
+
+        <!-- Log Out Button -->
+        <button class="logout-btn" id="btn-logout" title="Log Out">
+          <i data-lucide="log-out"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Map-First Viewport Workspace -->
+    <div class="content-viewport" id="content-viewport">
+
+
+
+      <!-- Leaflet Map (Takes up 100% of workspace background) -->
+      <div id="map"></div>
+
+      <!-- ==========================================
+           FLOATING OVERLAYS (LIVE TRACKING LEVEL)
+           ========================================== -->
+
+      <!-- 1. Floating Search & Collapsible Device Selection Panel (Left) -->
+      <div id="floating-fleet-panel" class="floating-overlay-panel left-panel">
+        <button class="panel-collapse-toggle-btn" id="btn-toggle-fleet-panel" aria-label="Toggle Devices List">
+          <i data-lucide="chevron-left" class="collapse-icon"></i>
+          <i data-lucide="chevron-right" class="expand-icon" style="display: none;"></i>
+        </button>
+
+        <div class="panel-inner-content">
+          <div class="sidebar-block border-bottom">
+            <span class="block-label">Select Device to Track</span>
+            <div class="search-input-wrapper">
+              <i data-lucide="search" class="search-icon"></i>
+              <input type="text" id="fleet-search" placeholder="Search device, customer or serial...">
+              <button type="button" class="btn-filter-toggle" id="btn-filter-toggle" aria-label="Toggle Filters">
+                <i data-lucide="sliders-horizontal" class="filter-icon"></i>
+                <i data-lucide="chevron-up" class="chevron-up-icon" style="display: none;"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-block border-bottom">
+            <span class="block-label">Status Filters</span>
+            <div class="filter-chips">
+              <button class="filter-chip active" data-filter="all">All</button>
+              <button class="filter-chip" data-filter="available">Available</button>
+              <button class="filter-chip" data-filter="assigned">Assigned</button>
+              <button class="filter-chip" data-filter="rented">Rented</button>
+              <button class="filter-chip" data-filter="maintenance">Maintenance</button>
+              <button class="filter-chip" data-filter="missing">Missing</button>
+            </div>
+          </div>
+
+          <div class="sidebar-block scrollable-list flex-grow-block">
+            <div id="fleet-list-container" class="fleet-cards-list">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Floating Active Telemetry Detail Panel (Right) -->
+      <div id="floating-telemetry-panel" class="floating-overlay-panel right-panel" style="display: none;">
+        <!-- Drag Handle for Mobile Swipe -->
+        <div class="drag-handle" id="bottom-sheet-drag-handle">
+          <div class="drag-handle-bar"></div>
+        </div>
+
+        <div class="panel-inner-content scrollable-panel-content">
+
+          <!-- Tracking Header Controls -->
+          <div class="sidebar-block border-bottom tracking-header-block">
+            <button class="btn btn-secondary btn-sm btn-block" id="back-to-fleet-btn">
+              <i data-lucide="x" style="width:13px; height:13px;"></i> Close Details
+            </button>
+            <div class="active-vehicle-info-header">
+              <h3 id="tracking-vehicle-plate">Smart Lamp A01</h3>
+              <span class="status-badge rented" id="tracking-vehicle-status">Rented</span>
+            </div>
+
+            <!-- Mobile compact summary info row -->
+            <div class="mobile-compact-info-row">
+              <div class="compact-info-item">
+                <span class="compact-label">ID:</span>
+                <span class="compact-val" id="mobile-compact-id">-</span>
+              </div>
+              <div class="compact-info-item">
+                <span class="compact-label">Holder:</span>
+                <span class="compact-val" id="mobile-compact-holder">-</span>
+              </div>
+              <div class="compact-info-item">
+                <span class="compact-label">Location:</span>
+                <span class="compact-val" id="mobile-compact-location">-</span>
+              </div>
+            </div>
+
+            <span class="last-updated-text" id="telemetry-ping-time">Last updated 1s ago</span>
+          </div>
+
+          <!-- Dynamic Telemetry Values Grid -->
+          <div class="sidebar-block border-bottom">
+            <div class="stats-grid">
+              <div class="stat-box">
+                <div class="stat-icon-wrapper blue">
+                  <i data-lucide="battery"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-label">Battery Charge</span>
+                  <span class="stat-value" id="stat-speed">88%</span>
+                </div>
+              </div>
+
+              <div class="stat-box">
+                <div class="stat-icon-wrapper green">
+                  <i data-lucide="shield"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-label">Warranty Status</span>
+                  <span class="stat-value" id="stat-distance">Active</span>
+                </div>
+              </div>
+
+              <div class="stat-box">
+                <div class="stat-icon-wrapper purple">
+                  <i data-lucide="calendar"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-label">Purchase Date</span>
+                  <span class="stat-value" id="stat-eta">2025-03-12</span>
+                </div>
+              </div>
+
+              <div class="stat-box">
+                <div class="stat-icon-wrapper orange">
+                  <i data-lucide="key"></i>
+                </div>
+                <div class="stat-info">
+                  <span class="stat-label">Lease/Rental Date</span>
+                  <span class="stat-value" id="stat-duration">2026-06-01</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Waypoints Current Position & Dropoff Location -->
+          <div class="sidebar-block border-bottom">
+            <div class="location-details-list">
+              <div class="location-item">
+                <span class="location-dot pickup"></span>
+                <div class="location-text">
+                  <span class="loc-label">Last Seen Landmark</span>
+                  <span class="loc-val" id="stat-location">Determining location...</span>
+                </div>
+              </div>
+              <div class="location-item">
+                <span class="location-dot dropoff"></span>
+                <div class="location-text">
+                  <span class="loc-label">Device Category</span>
+                  <span class="loc-val" id="stat-destination">Electronics</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulation rate configuration -->
+          <div class="sidebar-block border-bottom">
+            <span class="block-title">Telemetry Transmitter Control</span>
+            <div class="control-row">
+              <button class="btn btn-primary btn-sm" id="btn-play-pause">
+                <i data-lucide="pause" id="play-pause-icon"></i>
+                <span id="play-pause-text">Pause Telemetry</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-reset-trip">
+                <i data-lucide="rotate-ccw"></i> Restart
+              </button>
+            </div>
+            <div class="speed-slider-container" style="display:none;">
+              <div class="slider-header">
+                <span>Update Speed</span>
+                <span id="speed-multiplier-text">2x Speed</span>
+              </div>
+              <input type="range" id="speed-multiplier" class="speed-range" min="1" max="10" step="1" value="2">
+            </div>
+          </div>
+
+          <!-- Device activity logs -->
+          <div class="sidebar-block border-bottom">
+            <span class="block-title">Device Activity Logs</span>
+            <div class="timeline-container" id="timeline">
+              <!-- Timeline checkpoints rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Assigned Holder Details -->
+          <div class="sidebar-block border-bottom">
+            <span class="block-title">Current Device Holder</span>
+            <div class="driver-card">
+              <div class="driver-header-row">
+                <img id="driver-avatar" src="" alt="Holder Avatar" class="driver-avatar">
+                <div class="driver-core-details">
+                  <div class="driver-name-row">
+                    <span id="driver-name" class="driver-name">Sarah Connor</span>
+                  </div>
+                  <span id="driver-vehicle" class="driver-vehicle"
+                    style="font-family:var(--font-mono); font-size:0.7rem;">SN-L22-8094</span>
+                  <span id="driver-plate-details" class="driver-plate">s.connor@cyberdyne.com</span>
+                  <span id="driver-phone" class="driver-phone-info">+1 (555) 102-9844</span>
+                </div>
+              </div>
+              <div class="driver-contact-actions">
+                <a id="btn-call-driver" href="tel:555" class="btn btn-secondary btn-sm contact-btn">
+                  <i data-lucide="phone"></i> Call Holder
+                </a>
+                <button class="btn btn-secondary btn-sm contact-btn" id="btn-toggle-chat">
+                  <i data-lucide="message-square"></i> Chat with Holder
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Device Security Center (Mark as Missing) -->
+          <div class="sidebar-block emergency-block">
+            <div class="sos-info-row">
+              <div class="sos-label-info">
+                <span class="sos-title">Asset Security Center</span>
+                <span class="sos-number">Locate or report lost equipment</span>
+              </div>
+              <button class="btn btn-danger btn-sos" id="btn-sos-trigger">
+                <i data-lucide="alert-triangle"></i> Mark as Missing
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3. Floating Chat Dialogue Box -->
+      <div id="floating-chat-popup" class="floating-chat-container" style="display: none;">
+        <div class="chat-header">
+          <div class="chat-header-title">
+            <span class="chat-dot online"></span>
+            <span id="chat-driver-title">Chat with Customer</span>
+          </div>
+          <button class="chat-close-btn" id="btn-close-chat" aria-label="Close Chat">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Chat logs printed dynamically -->
+        </div>
+        <form class="chat-input-row" id="chat-form">
+          <input type="text" id="chat-input" placeholder="Type a message to customer..." required autocomplete="off">
+          <button type="submit" class="btn-send-chat" aria-label="Send Message">
+            <i data-lucide="send"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- ==========================================
+           ASSET MANAGEMENT OVERLAYS (MODAL DRAWER DRAWS)
+           ========================================== -->
+
+      <!-- DEVICES INVENTORY OVERLAY DRAWER -->
+      <div id="view-devices" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Device Asset Inventory</h3>
+            <button class="btn-close-drawer" data-close-drawer="devices"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body scrollable-table-wrapper">
+            <div id="mobile-devices-list" class="mobile-devices-list"></div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Device Model</th>
+                  <th>Device ID</th>
+                  <th>Serial Number</th>
+                  <th>Assigned Holder</th>
+                  <th>Battery Charge</th>
+                  <th>Asset Category</th>
+                  <th>Asset Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="devices-table-body">
+                <!-- Javascript draws devices -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CUSTOMERS DIRECTORY OVERLAY DRAWER -->
+      <div id="view-customers" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Customer & Client Directory</h3>
+            <button class="btn-close-drawer" data-close-drawer="customers"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body">
+            <div class="drivers-grid" id="customers-grid-container">
+              <!-- Javascript draws customer directory cards -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEVICE HISTORY OVERLAY DRAWER -->
+      <div id="view-history" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Device Activity & History Log</h3>
+            <button class="btn-close-drawer" data-close-drawer="history"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body scrollable-table-wrapper">
+            <div id="mobile-history-list" class="mobile-devices-list">
+              <!-- Card 1 -->
+              <div class="mobile-device-card">
+                <div class="mobile-device-card-header">
+                  <span class="mobile-device-name">Laptop L22</span>
+                  <span class="status-badge available">Returned</span>
+                </div>
+                <div class="mobile-device-card-details">
+                  <div><strong>Date / Time:</strong> 2026-06-14 18:24</div>
+                  <div><strong>Transaction ID:</strong> TX-9021</div>
+                  <div><strong>Assigned Holder:</strong> Devon Lane</div>
+                  <div class="mobile-device-card-metrics">
+                    <span><strong>Lease Duration:</strong> 12 Months</span>
+                    <span><strong>Warranty:</strong> Active</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Card 2 -->
+              <div class="mobile-device-card">
+                <div class="mobile-device-card-header">
+                  <span class="mobile-device-name">Projector P15</span>
+                  <span class="status-badge available">Returned</span>
+                </div>
+                <div class="mobile-device-card-details">
+                  <div><strong>Date / Time:</strong> 2026-06-14 14:10</div>
+                  <div><strong>Transaction ID:</strong> TX-8841</div>
+                  <div><strong>Assigned Holder:</strong> Sarah Connor</div>
+                  <div class="mobile-device-card-metrics">
+                    <span><strong>Lease Duration:</strong> 3 Months</span>
+                    <span><strong>Warranty:</strong> Active</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Card 3 -->
+              <div class="mobile-device-card">
+                <div class="mobile-device-card-header">
+                  <span class="mobile-device-name">Smart Lamp A01</span>
+                  <span class="status-badge assigned">Assigned</span>
+                </div>
+                <div class="mobile-device-card-details">
+                  <div><strong>Date / Time:</strong> 2026-06-13 22:05</div>
+                  <div><strong>Transaction ID:</strong> TX-7491</div>
+                  <div><strong>Assigned Holder:</strong> Marcus Wright</div>
+                  <div class="mobile-device-card-metrics">
+                    <span><strong>Lease Duration:</strong> 6 Months</span>
+                    <span><strong>Warranty:</strong> Active</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Card 4 -->
+              <div class="mobile-device-card">
+                <div class="mobile-device-card-header">
+                  <span class="mobile-device-name">GPS Tracker G08</span>
+                  <span class="status-badge missing">Missing</span>
+                </div>
+                <div class="mobile-device-card-details">
+                  <div><strong>Date / Time:</strong> 2026-06-12 11:15</div>
+                  <div><strong>Transaction ID:</strong> TX-6804</div>
+                  <div><strong>Assigned Holder:</strong> Lisa Simpson</div>
+                  <div class="mobile-device-card-metrics">
+                    <span><strong>Lease Duration:</strong> 12 Months</span>
+                    <span><strong>Warranty:</strong> Expired</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date / Time</th>
+                  <th>Transaction ID</th>
+                  <th>Device Model</th>
+                  <th>Assigned Holder</th>
+                  <th>Lease Duration</th>
+                  <th>Warranty Status</th>
+                  <th>Last Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-06-14 18:24</td>
+                  <td>TX-9021</td>
+                  <td>Laptop L22</td>
+                  <td>Devon Lane</td>
+                  <td>12 Months</td>
+                  <td>Active</td>
+                  <td><span class="status-badge available">Returned</span></td>
+                </tr>
+                <tr>
+                  <td>2026-06-14 14:10</td>
+                  <td>TX-8841</td>
+                  <td>Projector P15</td>
+                  <td>Sarah Connor</td>
+                  <td>3 Months</td>
+                  <td>Active</td>
+                  <td><span class="status-badge available">Returned</span></td>
+                </tr>
+                <tr>
+                  <td>2026-06-13 22:05</td>
+                  <td>TX-7491</td>
+                  <td>Smart Lamp A01</td>
+                  <td>Marcus Wright</td>
+                  <td>6 Months</td>
+                  <td>Active</td>
+                  <td><span class="status-badge assigned">Assigned</span></td>
+                </tr>
+                <tr>
+                  <td>2026-06-12 11:15</td>
+                  <td>TX-6804</td>
+                  <td>GPS Tracker G08</td>
+                  <td>Lisa Simpson</td>
+                  <td>12 Months</td>
+                  <td>Expired</td>
+                  <td><span class="status-badge missing">Missing</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALERTS & NOTIFICATIONS OVERLAY DRAWER -->
+      <div id="view-alerts" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Alerts & Notifications</h3>
+            <button class="btn-close-drawer" data-close-drawer="alerts"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body">
+            <div class="alerts-list">
+              <div class="alert-item danger" id="alert-item-missing-dev" style="display:none;">
+                <div class="alert-icon-circle"><i data-lucide="alert-triangle"></i></div>
+                <div class="alert-content-details">
+                  <strong id="alert-title-missing-dev">Device flagged as Missing</strong>
+                  <span id="alert-desc-missing-dev">Asset security protocol triggered.</span>
+                </div>
+                <button class="btn btn-secondary btn-sm"
+                  onclick="this.parentElement.style.display='none'">Dismiss</button>
+              </div>
+              <div class="alert-item danger">
+                <div class="alert-icon-circle"><i data-lucide="battery-warning"></i></div>
+                <div class="alert-content-details">
+                  <strong>Low battery level warning (18%)</strong>
+                  <span>GPS Tracker G08 (SN-G08-9230) - Lisa Simpson - 22 mins ago</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="alert('Alert resolved.')">Dismiss</button>
+              </div>
+              <div class="alert-item warning">
+                <div class="alert-icon-circle"><i data-lucide="wifi-off"></i></div>
+                <div class="alert-content-details">
+                  <strong>Unscheduled check-out alert</strong>
+                  <span>Smart Lamp A01 (SN-A01-1029) - Marcus Wright - 45 mins ago</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="alert('Alert resolved.')">Dismiss</button>
+              </div>
+              <div class="alert-item danger">
+                <div class="alert-icon-circle"><i data-lucide="alert-circle"></i></div>
+                <div class="alert-content-details">
+                  <strong>Geo-fence perimeter breach</strong>
+                  <span>Projector P15 (SN-P15-3891) - Devon Lane - 1 hour ago</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="alert('Alert resolved.')">Dismiss</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SYSTEM SETTINGS OVERLAY DRAWER -->
+      <div id="view-settings" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Console Settings & Preferences</h3>
+            <button class="btn-close-drawer" data-close-drawer="settings"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body">
+            <div class="settings-form">
+              <div class="settings-group">
+                <h4>Notification Preferences</h4>
+                <div class="switch-row">
+                  <span>Enable sound notifications on customer messages</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="switch-row">
+                  <span>Show alerts on battery level warnings</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h4>Telemetry Update Rate</h4>
+                <div class="switch-row">
+                  <span>Auto-refresh map vectors on device shift</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="switch-row">
+                  <span>Low Data Usage mode (reduces satellite image pings)</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h4>Map View Theme</h4>
+                <div class="switch-row">
+                  <span>Auto-sync map theme with dashboard dark/light theme</span>
+                  <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fixed Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+        <a href="#" class="nav-menu-item active" data-tab="live-tracking">
+          <i data-lucide="monitor"></i>
+          <span>Tracking</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="devices">
+          <i data-lucide="cpu"></i>
+          <span>Devices</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="customers">
+          <i data-lucide="users"></i>
+          <span>Customers</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="history">
+          <i data-lucide="clipboard-list"></i>
+          <span>History</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="alerts">
+          <i data-lucide="bell"></i>
+          <span>Alerts</span>
+          <span class="alert-badge" id="mobile-bottom-alert-badge">3</span>
+        </a>
+        <a href="#" class="nav-menu-item" data-tab="settings">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- Asset Escalation Alert Modal Dialog Overlay -->
+  <div id="sos-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card sos-card">
+      <div class="modal-icon text-danger" id="sos-dialog-icon">
+        <i data-lucide="alert-triangle"></i>
+      </div>
+      <h2 id="sos-dialog-title">Escalate Asset Security</h2>
+      <p id="sos-dialog-desc">You are about to flag Device <span id="sos-driver-name" class="font-bold">Smart Lamp
+          A01</span> (Serial: <span id="sos-plate" class="font-bold">SN-A01-1029</span>) as MISSING/LOST in the
+        database.</p>
+
+      <div class="sos-dispatch-details">
+        <p><strong>Holder Contact:</strong> <span id="sos-vehicle-name">Marcus Wright (+1 555-923-0182)</span></p>
+        <p><strong>Last Known Location:</strong> <span id="sos-location">Mission District</span></p>
+      </div>
+
+      <p class="warning-text" id="sos-dialog-warning">This action will trigger inventory warning logs, flash map
+        indicators in red, and prioritize this asset for retrieval.</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-cancel-sos">Cancel Action</button>
+        <button class="btn btn-primary btn-danger-action" id="btn-confirm-sos">Escalate Status</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet Map JS API -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Firebase App & Database SDKs (Compat version for simple global use) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+  <!-- Firebase Configuration -->
+  <script src="firebase-config.js"></script>
+
+  <!-- Application Controller script -->
+  <script src="app.js"></script>
+</body>
+
+</html>
