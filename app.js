@@ -266,6 +266,7 @@
       // Header controls
       themeToggleLogin: document.getElementById("theme-toggle"),
       themeToggleApp: document.getElementById("theme-toggle-app"),
+      mobileThemeToggle: document.getElementById("mobile-theme-toggle"),
       headerStatusPill: document.getElementById("header-status-pill"),
       headerTripStatus: document.getElementById("header-trip-status"),
       viewTitle: document.getElementById("view-title"),
@@ -342,8 +343,7 @@
       state.theme = cachedTheme;
     }
     document.body.className = state.theme;
-
-    // 2. Setup pre-filled steps
+    updateThemeIcons();
     resetAllSimulationStates();
 
     // 3. Check Authentication State
@@ -944,11 +944,42 @@
     if (mobLoc) mobLoc.textContent = tripState.locationName;
   }
 
+  // --- Theme Toggle ---
+  function toggleTheme() {
+    const isNowDark = document.body.classList.contains("theme-dark");
+    const newTheme = isNowDark ? "theme-light" : "theme-dark";
+    document.body.className = newTheme;
+    state.theme = newTheme;
+    localStorage.setItem("gr_theme", newTheme);
+    updateThemeIcons();
+  }
+
+  function updateThemeIcons() {
+    const isDark = document.body.classList.contains("theme-dark");
+    // Desktop toggle
+    const appBtn = document.getElementById("theme-toggle-app");
+    if (appBtn) {
+      const sun = appBtn.querySelector(".sun-icon");
+      const moon = appBtn.querySelector(".moon-icon");
+      if (sun) sun.style.display = isDark ? "inline-block" : "none";
+      if (moon) moon.style.display = isDark ? "none" : "inline-block";
+    }
+    // Mobile toggle
+    const mobileBtn = document.getElementById("mobile-theme-toggle");
+    if (mobileBtn) {
+      const sun = mobileBtn.querySelector(".sun-icon");
+      const moon = mobileBtn.querySelector(".moon-icon");
+      if (sun) sun.style.display = isDark ? "inline-block" : "none";
+      if (moon) moon.style.display = isDark ? "none" : "inline-block";
+    }
+  }
+
   // --- Add Event Listeners ---
   function setupEventListeners() {
     // Theme switches
     if (DOM.themeToggleLogin) DOM.themeToggleLogin.addEventListener("click", toggleTheme);
     if (DOM.themeToggleApp) DOM.themeToggleApp.addEventListener("click", toggleTheme);
+    if (DOM.mobileThemeToggle) DOM.mobileThemeToggle.addEventListener("click", toggleTheme);
 
     // Login Form Submit Check
     if (DOM.loginForm) DOM.loginForm.addEventListener("submit", handleLoginSubmit);

@@ -2353,12 +2353,23 @@ i[data-lucide], .lucide, svg.lucide {
     border-radius: 99px;
   }
 
-  .mobile-profile-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid var(--border-color);
+  /* Mobile theme toggle button */
+  .mobile-theme-toggle-btn {
+    background: var(--primary-glow) !important;
+    border-radius: 10px !important;
+    color: var(--text-primary) !important;
+  }
+
+  .mobile-theme-toggle-btn:hover,
+  .mobile-theme-toggle-btn:active {
+    background: var(--accent-glow) !important;
+    color: var(--accent) !important;
+  }
+
+  .mobile-theme-toggle-btn svg,
+  .mobile-theme-toggle-btn .lucide {
+    width: 18px !important;
+    height: 18px !important;
   }
 
   /* Show fixed mobile bottom navigation */

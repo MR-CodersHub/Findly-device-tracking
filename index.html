@@ -168,10 +168,10 @@
           <i data-lucide="bell"></i>
           <span class="alert-badge" id="mobile-notification-badge">3</span>
         </button>
-        <button class="mobile-header-action-btn profile-avatar-btn" id="mobile-profile-btn" aria-label="Theme Settings"
-          title="Toggle Theme">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=256&auto=format&fit=crop"
-            alt="Profile" class="mobile-profile-avatar">
+        <button class="mobile-header-action-btn mobile-theme-toggle-btn" id="mobile-theme-toggle"
+          aria-label="Toggle Theme" title="Toggle Light/Dark Mode">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon" style="display:none;"></i>
         </button>
       </div>
     </header>
@@ -546,72 +546,6 @@
             <button class="btn-close-drawer" data-close-drawer="history"><i data-lucide="x"></i></button>
           </div>
           <div class="drawer-modal-body scrollable-table-wrapper">
-            <div id="mobile-history-list" class="mobile-devices-list">
-              <!-- Card 1 -->
-              <div class="mobile-device-card">
-                <div class="mobile-device-card-header">
-                  <span class="mobile-device-name">Laptop L22</span>
-                  <span class="status-badge available">Returned</span>
-                </div>
-                <div class="mobile-device-card-details">
-                  <div><strong>Date / Time:</strong> 2026-06-14 18:24</div>
-                  <div><strong>Transaction ID:</strong> TX-9021</div>
-                  <div><strong>Assigned Holder:</strong> Devon Lane</div>
-                  <div class="mobile-device-card-metrics">
-                    <span><strong>Lease Duration:</strong> 12 Months</span>
-                    <span><strong>Warranty:</strong> Active</span>
-                  </div>
-                </div>
-              </div>
-              <!-- Card 2 -->
-              <div class="mobile-device-card">
-                <div class="mobile-device-card-header">
-                  <span class="mobile-device-name">Projector P15</span>
-                  <span class="status-badge available">Returned</span>
-                </div>
-                <div class="mobile-device-card-details">
-                  <div><strong>Date / Time:</strong> 2026-06-14 14:10</div>
-                  <div><strong>Transaction ID:</strong> TX-8841</div>
-                  <div><strong>Assigned Holder:</strong> Sarah Connor</div>
-                  <div class="mobile-device-card-metrics">
-                    <span><strong>Lease Duration:</strong> 3 Months</span>
-                    <span><strong>Warranty:</strong> Active</span>
-                  </div>
-                </div>
-              </div>
-              <!-- Card 3 -->
-              <div class="mobile-device-card">
-                <div class="mobile-device-card-header">
-                  <span class="mobile-device-name">Smart Lamp A01</span>
-                  <span class="status-badge assigned">Assigned</span>
-                </div>
-                <div class="mobile-device-card-details">
-                  <div><strong>Date / Time:</strong> 2026-06-13 22:05</div>
-                  <div><strong>Transaction ID:</strong> TX-7491</div>
-                  <div><strong>Assigned Holder:</strong> Marcus Wright</div>
-                  <div class="mobile-device-card-metrics">
-                    <span><strong>Lease Duration:</strong> 6 Months</span>
-                    <span><strong>Warranty:</strong> Active</span>
-                  </div>
-                </div>
-              </div>
-              <!-- Card 4 -->
-              <div class="mobile-device-card">
-                <div class="mobile-device-card-header">
-                  <span class="mobile-device-name">GPS Tracker G08</span>
-                  <span class="status-badge missing">Missing</span>
-                </div>
-                <div class="mobile-device-card-details">
-                  <div><strong>Date / Time:</strong> 2026-06-12 11:15</div>
-                  <div><strong>Transaction ID:</strong> TX-6804</div>
-                  <div><strong>Assigned Holder:</strong> Lisa Simpson</div>
-                  <div class="mobile-device-card-metrics">
-                    <span><strong>Lease Duration:</strong> 12 Months</span>
-                    <span><strong>Warranty:</strong> Expired</span>
-                  </div>
-                </div>
-              </div>
-            </div>
             <table class="data-table">
               <thead>
                 <tr>
