@@ -57,88 +57,220 @@
         </div>
       </div>
 
-      <!-- Right: Credentials Input Forms -->
+      <!-- Right: Credentials Input Forms & Registration -->
       <div class="login-form-area">
-        <div class="form-header">
-          <h1>Findly Asset Console</h1>
-          <p>Login to track and manage your hardware devices and assets.</p>
+
+        <!-- ==================== LOGIN FORM SECTION ==================== -->
+        <div id="login-view-section" class="auth-section-view">
+          <div class="form-header">
+            <h1>Welcome Back</h1>
+            <p>Access your tracking dashboard and device management system.</p>
+          </div>
+
+          <form id="login-form" class="credentials-form">
+            <!-- Validation Alerts Box -->
+            <div id="login-error-msg" class="validation-alert-box" style="display: none;">
+              <i data-lucide="alert-circle"></i>
+              <span id="error-text">Incorrect credentials. Try again.</span>
+            </div>
+
+            <!-- Access Role Segmented Selector -->
+            <div class="form-field-group">
+              <label>Access Role</label>
+              <div class="account-type-toggle">
+                <button type="button" class="type-btn active" data-role="user" id="btn-login-role-user">
+                  <i data-lucide="user"></i> Standard User
+                </button>
+                <button type="button" class="type-btn" data-role="admin" id="btn-login-role-admin">
+                  <i data-lucide="shield"></i> Administrator
+                </button>
+                <input type="hidden" id="login-account-role" value="user">
+              </div>
+            </div>
+
+            <div class="form-field-group">
+              <label for="login-username">Email Address / Mobile Number</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="text" id="login-username" placeholder="e.g. admin@gmail.com" autocomplete="username">
+              </div>
+            </div>
+
+            <div class="form-field-group" id="login-device-code-group">
+              <label for="login-device-code" id="login-device-code-label">Device Code</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="cpu" class="input-icon"></i>
+                <input type="text" id="login-device-code" placeholder="e.g. DEV-0001 or SN-0001">
+              </div>
+            </div>
+
+            <div class="form-field-group">
+              <div class="password-label-row">
+                <label for="login-password">Password</label>
+                <a href="#" class="forgot-link"
+                  onclick="alert('Forgot Password feature is simulated. Enter any email and password matching validation rules to login.')">Forgot
+                  Password?</a>
+              </div>
+              <div class="input-icon-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+                <button type="button" class="password-toggle-btn" id="password-toggle"
+                  aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" class="eye-open-icon"></i>
+                  <i data-lucide="eye-off" class="eye-closed-icon" style="display: none;"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-utility-row">
+              <label class="checkbox-label">
+                <input type="checkbox" id="login-remember">
+                <span class="custom-checkbox"></span>
+                Keep me logged in
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit">
+              <span id="btn-login-text">Sign In to Asset Console</span>
+              <div class="btn-spinner" id="login-spinner" style="display: none;"></div>
+            </button>
+          </form>
+
+          <div class="auth-redirect-row">
+            <span>Don't have an account? <a href="#" id="link-to-signup" class="auth-switch-link">Sign Up</a></span>
+          </div>
         </div>
 
-        <form id="login-form" class="credentials-form">
-          <!-- Validation Alerts Box -->
-          <div id="login-error-msg" class="validation-alert-box" style="display: none;">
-            <i data-lucide="alert-circle"></i>
-            <span id="error-text">Incorrect credentials. Try again.</span>
+        <!-- ==================== SIGN UP FORM SECTION ==================== -->
+        <div id="signup-view-section" class="auth-section-view" style="display: none;">
+          <div class="form-header">
+            <h1>Create Account</h1>
+            <p>Register your device tracker or business profile to start monitoring assets.</p>
           </div>
 
-          <div class="form-field-group">
-            <label for="login-username">Email Address / Mobile Number</label>
-            <div class="input-icon-wrapper">
-              <i data-lucide="mail" class="input-icon"></i>
-              <input type="text" id="login-username" placeholder="e.g. admin@findly.com" autocomplete="username">
+          <form id="signup-form" class="credentials-form">
+            <!-- Validation Alerts Box -->
+            <div id="signup-error-msg" class="validation-alert-box" style="display: none;">
+              <i data-lucide="alert-circle"></i>
+              <span id="signup-error-text">Please resolve the form errors.</span>
             </div>
-          </div>
 
-          <div class="form-field-group">
-            <div class="password-label-row">
-              <label for="login-password">Password</label>
-              <a href="#" class="forgot-link"
-                onclick="alert('Forgot Password feature is simulated. Enter any email and password matching validation rules to login.')">Forgot
-                Password?</a>
+            <div id="signup-success-msg" class="success-alert-box" style="display: none;">
+              <i data-lucide="check-circle"></i>
+              <span id="signup-success-text">Account created successfully! Redirecting...</span>
             </div>
-            <div class="input-icon-wrapper">
-              <i data-lucide="lock" class="input-icon"></i>
-              <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
-              <button type="button" class="password-toggle-btn" id="password-toggle"
-                aria-label="Toggle Password Visibility">
-                <i data-lucide="eye" class="eye-open-icon"></i>
-                <i data-lucide="eye-off" class="eye-closed-icon" style="display: none;"></i>
-              </button>
+
+            <!-- Account Type Segmented Selector -->
+            <div class="form-field-group">
+              <label>Account Type</label>
+              <div class="account-type-toggle">
+                <button type="button" class="type-btn active" data-type="individual" id="btn-type-individual">
+                  <i data-lucide="user"></i> Individual
+                </button>
+                <button type="button" class="type-btn" data-type="company" id="btn-type-company">
+                  <i data-lucide="briefcase"></i> Company
+                </button>
+                <input type="hidden" id="signup-account-type" value="individual">
+              </div>
             </div>
+
+            <!-- Dynamic Company Name Field (Toggled) -->
+            <div class="form-field-group" id="company-name-group" style="display: none;">
+              <label for="signup-company-name">Company Name</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="building" class="input-icon"></i>
+                <input type="text" id="signup-company-name" placeholder="e.g. Cyberdyne Systems Ltd.">
+              </div>
+            </div>
+
+            <!-- Full Name / Contact Person Name -->
+            <div class="form-field-group">
+              <label for="signup-fullname" id="lbl-signup-fullname">Full Name</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="user" class="input-icon"></i>
+                <input type="text" id="signup-fullname" placeholder="e.g. Sarah Connor">
+              </div>
+            </div>
+
+            <!-- Email Address / Company Email -->
+            <div class="form-field-group">
+              <label for="signup-email" id="lbl-signup-email">Email Address</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="mail" class="input-icon"></i>
+                <input type="email" id="signup-email" placeholder="e.g. s.connor@cyberdyne.com">
+              </div>
+            </div>
+
+            <!-- Mobile Number / Company Phone Number -->
+            <div class="form-field-group">
+              <label for="signup-phone" id="lbl-signup-phone">Mobile Number</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="phone" class="input-icon"></i>
+                <input type="tel" id="signup-phone" placeholder="e.g. +91 81234 56789">
+              </div>
+            </div>
+
+            <!-- Device Tracking Code -->
+            <div class="form-field-group">
+              <label for="signup-device-code">Device Tracking Code (Serial Number)</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="cpu" class="input-icon"></i>
+                <input type="text" id="signup-device-code" placeholder="e.g. SN-L22-8094">
+              </div>
+              <span class="field-hint">Find the serial code sticker on your physical device label (e.g.
+                SN-XXX-XXXX).</span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-field-group">
+              <label for="signup-password">Password</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="signup-password" placeholder="••••••••">
+                <button type="button" class="password-toggle-btn signup-pass-toggle" data-target="signup-password"
+                  aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" class="eye-open-icon"></i>
+                  <i data-lucide="eye-off" class="eye-closed-icon" style="display: none;"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-field-group">
+              <label for="signup-confirm-password">Confirm Password</label>
+              <div class="input-icon-wrapper">
+                <i data-lucide="lock" class="input-icon"></i>
+                <input type="password" id="signup-confirm-password" placeholder="••••••••">
+                <button type="button" class="password-toggle-btn signup-pass-toggle"
+                  data-target="signup-confirm-password" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" class="eye-open-icon"></i>
+                  <i data-lucide="eye-off" class="eye-closed-icon" style="display: none;"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Terms & Conditions Checkbox -->
+            <div class="form-utility-row">
+              <label class="checkbox-label">
+                <input type="checkbox" id="signup-terms">
+                <span class="custom-checkbox"></span>
+                I accept the <a href="#" onclick="alert('Terms & Conditions simulated.')">Terms of Service</a> & <a
+                  href="#" onclick="alert('Privacy Policy simulated.')">Privacy Policy</a>
+              </label>
+            </div>
+
+            <!-- Register Button -->
+            <button type="submit" class="btn btn-primary btn-block" id="btn-signup-submit">
+              <span id="btn-signup-text">Register & Initialize Device</span>
+              <div class="btn-spinner" id="signup-spinner" style="display: none;"></div>
+            </button>
+          </form>
+
+          <div class="auth-redirect-row">
+            <span>Already have an account? <a href="#" id="link-to-login" class="auth-switch-link">Sign In</a></span>
           </div>
-
-          <div class="form-utility-row">
-            <label class="checkbox-label">
-              <input type="checkbox" id="login-remember">
-              <span class="custom-checkbox"></span>
-              Keep me logged in
-            </label>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block" id="btn-login-submit">
-            <span id="btn-login-text">Sign In to Asset Console</span>
-            <div class="btn-spinner" id="login-spinner" style="display: none;"></div>
-          </button>
-        </form>
-
-        <div class="social-login-separator">
-          <span>Or sign in with</span>
         </div>
 
-        <div class="social-login-grid">
-          <button class="social-btn" onclick="alert('Social login simulated.')">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                fill="#4285F4" />
-              <path
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                fill="#34A853" />
-              <path
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                fill="#FBBC05" />
-              <path
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                fill="#EA4335" />
-            </svg> Google
-          </button>
-          <button class="social-btn" onclick="alert('Social login simulated.')">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path
-                d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" />
-            </svg> Facebook
-          </button>
-        </div>
       </div>
 
     </div>
@@ -159,9 +291,7 @@
           <span class="mobile-logo-text">Findly</span>
         </a>
       </div>
-      <div class="mobile-nav-center">
-        <span class="mobile-page-title" id="mobile-page-title">Tracking</span>
-      </div>
+
       <div class="mobile-nav-right">
         <button class="mobile-header-action-btn" id="mobile-notification-btn" aria-label="Notifications"
           title="Notifications">
@@ -173,6 +303,78 @@
           <i data-lucide="sun" class="sun-icon"></i>
           <i data-lucide="moon" class="moon-icon" style="display:none;"></i>
         </button>
+
+        <!-- Mobile Profile Dropdown Container -->
+        <div class="profile-dropdown-container" id="mobile-profile-dropdown-container">
+          <button class="mobile-header-action-btn profile-dropdown-btn" id="mobile-profile-dropdown-btn"
+            aria-label="User Profile" aria-haspopup="true" aria-expanded="false"
+            style="padding: 0; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; margin-left: 8px;">
+            <img class="header-profile-avatar" id="mobile-header-profile-avatar"
+              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+              alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+          </button>
+
+          <div class="profile-dropdown-menu" id="mobile-profile-dropdown-menu" style="display: none;">
+            <div class="dropdown-profile-header">
+              <img class="dropdown-profile-avatar" id="mobile-dropdown-profile-avatar"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+                alt="Avatar">
+              <div class="dropdown-profile-info">
+                <span class="dropdown-profile-name" id="mobile-dropdown-profile-name">Loading...</span>
+                <span class="dropdown-profile-email" id="mobile-dropdown-profile-email">loading...</span>
+                <span class="dropdown-profile-role badge" id="mobile-dropdown-profile-role">User</span>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-menu-options">
+              <a href="#" class="dropdown-item" data-action="dashboard-overview">
+                <i data-lucide="monitor"></i>
+                <span>Dashboard Overview</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="my-profile">
+                <i data-lucide="user"></i>
+                <span>My Profile</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="account-info">
+                <i data-lucide="info"></i>
+                <span>Account Information</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="assigned-devices">
+                <i data-lucide="cpu"></i>
+                <span>Assigned Devices</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="assignments" id="mobile-dropdown-item-assignments">
+                <i data-lucide="link"></i>
+                <span>Assignments</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="notifications">
+                <i data-lucide="bell"></i>
+                <span>Notifications</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="settings">
+                <i data-lucide="settings"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="change-password">
+                <i data-lucide="lock"></i>
+                <span>Change Password</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="help-support">
+                <i data-lucide="help-circle"></i>
+                <span>Help & Support</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <a href="#" class="dropdown-item logout" data-action="sign-out">
+                <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -190,7 +392,7 @@
       <nav class="nav-center-menu">
         <a href="#" class="nav-menu-item active" data-tab="live-tracking">
           <i data-lucide="monitor"></i>
-          <span>Device Tracking</span>
+          <span>Tracking</span>
         </a>
         <a href="#" class="nav-menu-item" data-tab="devices">
           <i data-lucide="cpu"></i>
@@ -216,13 +418,7 @@
       </nav>
 
       <div class="nav-right">
-        <!-- Connection Status Indicator -->
-        <div id="connection-status" class="connection-status-pill offline">
-          <span class="status-dot"></span>
-          <span id="connection-status-text">Offline</span>
-        </div>
 
-        <div class="nav-divider"></div>
 
         <!-- Light/Dark Theme Toggle -->
         <button class="theme-toggle-btn" id="theme-toggle-app" aria-label="Toggle Dark/Light Mode">
@@ -230,13 +426,78 @@
           <i data-lucide="moon" class="moon-icon"></i>
         </button>
 
-        <div class="nav-divider"></div>
+        <!-- Profile Dropdown Container -->
+        <div class="profile-dropdown-container" id="profile-dropdown-container">
+          <button class="profile-dropdown-btn" id="profile-dropdown-btn" aria-label="User Profile" aria-haspopup="true"
+            aria-expanded="false">
+            <img class="header-profile-avatar" id="header-profile-avatar"
+              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+              alt="Avatar">
+            <i data-lucide="chevron-down" class="dropdown-chevron"></i>
+          </button>
 
-        <!-- Log Out Button -->
-        <button class="logout-btn" id="btn-logout" title="Log Out">
-          <i data-lucide="log-out"></i>
-          <span>Sign Out</span>
-        </button>
+
+          <div class="profile-dropdown-menu" id="profile-dropdown-menu" style="display: none;">
+            <div class="dropdown-profile-header">
+              <img class="dropdown-profile-avatar" id="dropdown-profile-avatar"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+                alt="Avatar">
+              <div class="dropdown-profile-info">
+                <span class="dropdown-profile-name" id="dropdown-profile-name">Loading...</span>
+                <span class="dropdown-profile-email" id="dropdown-profile-email">loading...</span>
+                <span class="dropdown-profile-role badge" id="dropdown-profile-role">User</span>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-menu-options">
+              <a href="#" class="dropdown-item" data-action="dashboard-overview">
+                <i data-lucide="monitor"></i>
+                <span>Dashboard Overview</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="my-profile">
+                <i data-lucide="user"></i>
+                <span>My Profile</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="account-info">
+                <i data-lucide="info"></i>
+                <span>Account Information</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="assigned-devices">
+                <i data-lucide="cpu"></i>
+                <span>Assigned Devices</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="assignments" id="dropdown-item-assignments">
+                <i data-lucide="link"></i>
+                <span>Assignments</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="notifications">
+                <i data-lucide="bell"></i>
+                <span>Notifications</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="settings">
+                <i data-lucide="settings"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="change-password">
+                <i data-lucide="lock"></i>
+                <span>Change Password</span>
+              </a>
+              <a href="#" class="dropdown-item" data-action="help-support">
+                <i data-lucide="help-circle"></i>
+                <span>Help & Support</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <a href="#" class="dropdown-item logout" data-action="sign-out">
+                <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -269,6 +530,19 @@
                 <i data-lucide="sliders-horizontal" class="filter-icon"></i>
                 <i data-lucide="chevron-up" class="chevron-up-icon" style="display: none;"></i>
               </button>
+            </div>
+            <div class="fleet-status-counters">
+              <span style="color: var(--success); display: flex; align-items: center; gap: 4px;">
+                <span
+                  style="width: 6px; height: 6px; border-radius: 50%; background-color: var(--success); display: inline-block;"></span>
+                Online: <strong id="fleet-counter-online">0</strong>
+              </span>
+              <span
+                style="color: var(--text-secondary); display: flex; align-items: center; gap: 4px; margin-left: 12px;">
+                <span
+                  style="width: 6px; height: 6px; border-radius: 50%; background-color: var(--text-secondary); display: inline-block;"></span>
+                Offline: <strong id="fleet-counter-offline">0</strong>
+              </span>
             </div>
           </div>
 
@@ -308,7 +582,10 @@
             </button>
             <div class="active-vehicle-info-header">
               <h3 id="tracking-vehicle-plate">Smart Lamp A01</h3>
-              <span class="status-badge rented" id="tracking-vehicle-status">Rented</span>
+              <div style="display: flex; gap: 4px; align-items: center;">
+                <span class="status-badge rented" id="tracking-vehicle-status">Rented</span>
+                <span class="status-badge online" id="tracking-vehicle-connection-status">Online</span>
+              </div>
             </div>
 
             <!-- Mobile compact summary info row -->
@@ -429,7 +706,9 @@
             <span class="block-title">Current Device Holder</span>
             <div class="driver-card">
               <div class="driver-header-row">
-                <img id="driver-avatar" src="" alt="Holder Avatar" class="driver-avatar">
+                <img id="driver-avatar"
+                  src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+                  alt="Holder Avatar" class="driver-avatar">
                 <div class="driver-core-details">
                   <div class="driver-name-row">
                     <span id="driver-name" class="driver-name">Sarah Connor</span>
@@ -444,6 +723,9 @@
                 <a id="btn-call-driver" href="tel:555" class="btn btn-secondary btn-sm contact-btn">
                   <i data-lucide="phone"></i> Call Holder
                 </a>
+                <button class="btn btn-secondary btn-sm contact-btn" id="btn-view-holder-devices">
+                  <i data-lucide="cpu"></i> View Devices
+                </button>
                 <button class="btn btn-secondary btn-sm contact-btn" id="btn-toggle-chat">
                   <i data-lucide="message-square"></i> Chat with Holder
                 </button>
@@ -528,9 +810,53 @@
         <div class="drawer-modal-card">
           <div class="drawer-modal-header">
             <h3>Customer & Client Directory</h3>
-            <button class="btn-close-drawer" data-close-drawer="customers"><i data-lucide="x"></i></button>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button id="btn-show-add-customer" class="btn btn-primary btn-sm"
+                style="display: none; padding: 0 12px; height: 32px; font-size: 0.725rem;">
+                <i data-lucide="plus" style="width: 12px; height: 12px; margin-right: 4px;"></i> Add Customer
+              </button>
+              <button class="btn-close-drawer" data-close-drawer="customers"><i data-lucide="x"></i></button>
+            </div>
           </div>
           <div class="drawer-modal-body">
+            <!-- Add/Edit Customer Form (Hidden by default) -->
+            <div id="customer-form-panel"
+              style="display: none; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+              <h4 id="customer-form-title"
+                style="margin-bottom: 12px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--text-primary);">
+                Add New Customer</h4>
+              <form id="customer-editor-form"
+                style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 16px; align-items: end;">
+                <input type="hidden" id="edit-customer-original-email">
+                <div class="form-field-group" style="gap: 6px;">
+                  <label for="customer-name-input"
+                    style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Full
+                    Name</label>
+                  <input type="text" id="customer-name-input" placeholder="e.g. John Doe" required
+                    style="width: 100%; height: 38px; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 10px; font-size: 0.8rem; color: var(--text-primary);">
+                </div>
+                <div class="form-field-group" style="gap: 6px;">
+                  <label for="customer-email-input"
+                    style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Email
+                    Address</label>
+                  <input type="email" id="customer-email-input" placeholder="e.g. john@example.com" required
+                    style="width: 100%; height: 38px; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 10px; font-size: 0.8rem; color: var(--text-primary);">
+                </div>
+                <div class="form-field-group" style="gap: 6px;">
+                  <label for="customer-phone-input"
+                    style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Phone
+                    Number</label>
+                  <input type="tel" id="customer-phone-input" placeholder="e.g. +91 99000 11000" required
+                    style="width: 100%; height: 38px; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 10px; font-size: 0.8rem; color: var(--text-primary);">
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button type="submit" class="btn btn-primary" style="height: 38px; padding: 0 20px;">Save</button>
+                  <button type="button" class="btn btn-secondary" id="btn-cancel-customer-edit"
+                    style="height: 38px; padding: 0 15px;">Cancel</button>
+                </div>
+              </form>
+            </div>
+
             <div class="drivers-grid" id="customers-grid-container">
               <!-- Javascript draws customer directory cards -->
             </div>
@@ -538,68 +864,6 @@
         </div>
       </div>
 
-      <!-- DEVICE HISTORY OVERLAY DRAWER -->
-      <div id="view-history" class="overlay-drawer-modal" style="display: none;">
-        <div class="drawer-modal-card">
-          <div class="drawer-modal-header">
-            <h3>Device Activity & History Log</h3>
-            <button class="btn-close-drawer" data-close-drawer="history"><i data-lucide="x"></i></button>
-          </div>
-          <div class="drawer-modal-body scrollable-table-wrapper">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Date / Time</th>
-                  <th>Transaction ID</th>
-                  <th>Device Model</th>
-                  <th>Assigned Holder</th>
-                  <th>Lease Duration</th>
-                  <th>Warranty Status</th>
-                  <th>Last Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>2026-06-14 18:24</td>
-                  <td>TX-9021</td>
-                  <td>Laptop L22</td>
-                  <td>Devon Lane</td>
-                  <td>12 Months</td>
-                  <td>Active</td>
-                  <td><span class="status-badge available">Returned</span></td>
-                </tr>
-                <tr>
-                  <td>2026-06-14 14:10</td>
-                  <td>TX-8841</td>
-                  <td>Projector P15</td>
-                  <td>Sarah Connor</td>
-                  <td>3 Months</td>
-                  <td>Active</td>
-                  <td><span class="status-badge available">Returned</span></td>
-                </tr>
-                <tr>
-                  <td>2026-06-13 22:05</td>
-                  <td>TX-7491</td>
-                  <td>Smart Lamp A01</td>
-                  <td>Marcus Wright</td>
-                  <td>6 Months</td>
-                  <td>Active</td>
-                  <td><span class="status-badge assigned">Assigned</span></td>
-                </tr>
-                <tr>
-                  <td>2026-06-12 11:15</td>
-                  <td>TX-6804</td>
-                  <td>GPS Tracker G08</td>
-                  <td>Lisa Simpson</td>
-                  <td>12 Months</td>
-                  <td>Expired</td>
-                  <td><span class="status-badge missing">Missing</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
 
       <!-- ALERTS & NOTIFICATIONS OVERLAY DRAWER -->
       <div id="view-alerts" class="overlay-drawer-modal" style="display: none;">
@@ -650,59 +914,675 @@
 
       <!-- SYSTEM SETTINGS OVERLAY DRAWER -->
       <div id="view-settings" class="overlay-drawer-modal" style="display: none;">
-        <div class="drawer-modal-card">
+        <div class="drawer-modal-card" style="max-height: 85vh; height: 750px;">
           <div class="drawer-modal-header">
             <h3>Console Settings & Preferences</h3>
             <button class="btn-close-drawer" data-close-drawer="settings"><i data-lucide="x"></i></button>
           </div>
+          <div class="drawer-modal-body"
+            style="display: flex; flex-direction: column; height: calc(100% - 60px); overflow: hidden; padding-bottom: 20px;">
+
+            <!-- Settings Segmented Tabs -->
+            <div class="settings-tabs-bar"
+              style="display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; flex-shrink: 0; overflow-x: auto;">
+              <button type="button" class="tab-btn active" id="btn-sett-tab-general" data-settings-tab="general">
+                <i data-lucide="settings"></i> General
+              </button>
+              <button type="button" class="tab-btn" id="btn-sett-tab-users" data-settings-tab="users">
+                <i data-lucide="shield"></i> Users
+              </button>
+              <button type="button" class="tab-btn" id="btn-sett-tab-roles" data-settings-tab="roles">
+                <i data-lucide="key"></i> Roles & Permissions
+              </button>
+              <button type="button" class="tab-btn" id="btn-sett-tab-notifications" data-settings-tab="notifications">
+                <i data-lucide="bell"></i> Notifications
+              </button>
+              <button type="button" class="tab-btn" id="btn-sett-tab-security" data-settings-tab="security">
+                <i data-lucide="lock"></i> Security
+              </button>
+              <button type="button" class="tab-btn" id="btn-sett-tab-preferences" data-settings-tab="preferences">
+                <i data-lucide="sliders"></i> System Preferences
+              </button>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="settings-tab-content-area" style="flex: 1; overflow-y: auto; padding-right: 4px;">
+
+              <!-- 1. GENERAL SETTINGS -->
+              <div id="sett-sec-general" class="sett-tab-section">
+                <form id="settings-general-form" class="settings-form"
+                  style="gap: 16px; display: flex; flex-direction: column;">
+                  <div class="settings-group">
+                    <h4>Account Details</h4>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Full
+                        Name</label>
+                      <input type="text" id="sett-profile-name" value="Console Admin"
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    </div>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Email
+                        Address</label>
+                      <input type="email" id="sett-profile-email" value="admin@gmail.com" disabled
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-muted); cursor: not-allowed; outline: none;">
+                    </div>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Phone
+                        Number</label>
+                      <input type="text" id="sett-profile-phone" value="+91 90000 00000"
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    </div>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Enterprise
+                        Tenant</label>
+                      <input type="text" id="sett-profile-tenant" value="Findly Corp"
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary"
+                    style="height: 38px; align-self: flex-start; padding: 0 20px;">Save Profile Changes</button>
+                </form>
+              </div>
+
+              <!-- 2. USER MANAGEMENT -->
+              <div id="sett-sec-users" class="sett-tab-section" style="display: none;">
+                <div class="scrollable-table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>User Full Name</th>
+                        <th>Email Address</th>
+                        <th>Phone Number</th>
+                        <th>Registered Date</th>
+                        <th>Account Type</th>
+                        <th>Verification</th>
+                      </tr>
+                    </thead>
+                    <tbody id="user-management-table-body">
+                      <!-- Javascript draws registered users -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 3. ROLES & PERMISSIONS -->
+              <div id="sett-sec-roles" class="sett-tab-section" style="display: none;">
+                <div class="scrollable-table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Role</th>
+                        <th>Description</th>
+                        <th>Modules Allowed</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>System Admin</strong></td>
+                        <td>Full console management, user configuration, device assignments, and reporting.</td>
+                        <td><span style="font-size: 0.7rem; color: var(--accent);">All Access</span></td>
+                        <td><span class="status-badge available">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Standard User</strong></td>
+                        <td>View assigned devices, track device movement history, modify own preferences.</td>
+                        <td><span style="font-size: 0.7rem; color: var(--text-secondary);">Tracking, Own Devices,
+                            History, Profile</span></td>
+                        <td><span class="status-badge available">Active</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Viewer</strong></td>
+                        <td>Read-only monitoring dashboard, no database edits or asset operations allowed.</td>
+                        <td><span style="font-size: 0.7rem; color: var(--text-muted);">Tracking, Devices (Read)</span>
+                        </td>
+                        <td><span class="status-badge maintenance">Restricted</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 4. NOTIFICATIONS -->
+              <div id="sett-sec-notifications" class="sett-tab-section" style="display: none;">
+                <div class="settings-form">
+                  <div class="settings-group">
+                    <h4>Notification Preferences</h4>
+                    <div class="switch-row">
+                      <span>Enable sound notifications on customer messages</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sett-notify-sound" checked>
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                    <div class="switch-row">
+                      <span>Show alerts on battery level warnings</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sett-notify-battery" checked>
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. SECURITY -->
+              <div id="sett-sec-security" class="sett-tab-section" style="display: none;">
+                <form id="settings-security-form" class="settings-form"
+                  style="gap: 16px; display: flex; flex-direction: column;">
+                  <div class="settings-group">
+                    <h4>Change Password</h4>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Current
+                        Password</label>
+                      <input type="password" id="sett-security-current-pass"
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    </div>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">New
+                        Password</label>
+                      <input type="password" id="sett-security-new-pass"
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    </div>
+                    <div class="form-field-group" style="margin-top: 10px; gap: 6px;">
+                      <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary);">Confirm New
+                        Password</label>
+                      <input type="password" id="sett-security-confirm-pass"
+                        style="width: 100%; height: 38px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 12px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    </div>
+                  </div>
+
+                  <div class="settings-group" style="margin-top: 8px;">
+                    <h4>Security Credentials</h4>
+                    <div class="switch-row">
+                      <span>Enable Multi-Factor Authentication (MFA / 2FA)</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sett-security-mfa">
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                    <div class="switch-row" style="margin-top: 12px; align-items: center;">
+                      <span>Auto-lock Console Session Timeout</span>
+                      <select id="sett-security-timeout"
+                        style="height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none;">
+                        <option value="15">15 Minutes</option>
+                        <option value="30" selected>30 Minutes</option>
+                        <option value="60">1 Hour</option>
+                        <option value="never">Never Lock</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary"
+                    style="height: 38px; align-self: flex-start; padding: 0 20px;">Update Security Settings</button>
+                </form>
+              </div>
+
+              <!-- 6. SYSTEM PREFERENCES -->
+              <div id="sett-sec-preferences" class="sett-tab-section" style="display: none;">
+                <div class="settings-form">
+                  <div class="settings-group">
+                    <h4>Vector Map Refresh</h4>
+                    <div class="switch-row">
+                      <span>Auto-refresh map vectors on device shift</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sett-pref-autorefresh" checked>
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                    <div class="switch-row">
+                      <span>Low Data Usage mode (reduces satellite image pings)</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sett-pref-lowdata">
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="settings-group">
+                    <h4>Theme Synchronization</h4>
+                    <div class="switch-row">
+                      <span>Auto-sync map theme with dashboard dark/light theme</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sett-pref-themesync" checked>
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="settings-group">
+                    <h4>Telemetry Settings</h4>
+                    <div class="switch-row" style="align-items: center;">
+                      <span>Telemetry Update Rate / Ping Frequency</span>
+                      <select id="sett-pref-pingrate"
+                        style="height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none;">
+                        <option value="1">1 Second (Live)</option>
+                        <option value="2" selected>2 Seconds (Standard)</option>
+                        <option value="5">5 Seconds (Balanced)</option>
+                        <option value="10">10 Seconds (Power Saver)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEVICE ASSIGNMENTS OVERLAY DRAWER -->
+      <div id="view-assignments" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Device Assignments</h3>
+            <button class="btn-close-drawer" data-close-drawer="assignments"><i data-lucide="x"></i></button>
+          </div>
           <div class="drawer-modal-body">
-            <div class="settings-form">
-              <div class="settings-group">
-                <h4>Notification Preferences</h4>
-                <div class="switch-row">
-                  <span>Enable sound notifications on customer messages</span>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
+            <!-- Assignment Form (Admins can assign or transfer devices) -->
+            <div class="assignment-control-panel"
+              style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+              <h4
+                style="margin-bottom: 12px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--text-primary);">
+                Assign / Transfer Device</h4>
+              <form id="assignment-form"
+                style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end;">
+                <div class="form-field-group" style="gap: 6px;">
+                  <label for="assign-device-select"
+                    style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Select
+                    Device</label>
+                  <select id="assign-device-select"
+                    style="width: 100%; height: 38px; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 10px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    <!-- Javascript populates -->
+                  </select>
                 </div>
-                <div class="switch-row">
-                  <span>Show alerts on battery level warnings</span>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
+                <div class="form-field-group" style="gap: 6px;">
+                  <label for="assign-customer-select"
+                    style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Assign
+                    To Customer</label>
+                  <select id="assign-customer-select"
+                    style="width: 100%; height: 38px; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 0 10px; font-size: 0.8rem; color: var(--text-primary); outline: none;">
+                    <!-- Javascript populates -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="height: 38px; padding: 0 20px;">Assign
+                  Asset</button>
+              </form>
+            </div>
+
+            <!-- Current Assignments Table -->
+            <div class="scrollable-table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Device</th>
+                    <th>Serial Number</th>
+                    <th>Current Holder</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="assignments-table-body">
+                  <!-- Javascript draws assignments -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTS & HISTORY OVERLAY DRAWER -->
+      <div id="view-reports" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card" style="max-height: 85vh; height: 750px;">
+          <div class="drawer-modal-header">
+            <h3>Reports & History</h3>
+            <button class="btn-close-drawer" data-close-drawer="reports"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body"
+            style="display: flex; flex-direction: column; height: calc(100% - 60px); overflow: hidden; padding-bottom: 20px;">
+
+            <!-- Reports & History Segmented Tabs -->
+            <div class="reports-tabs-bar"
+              style="display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; flex-shrink: 0; overflow-x: auto;">
+              <button type="button" class="tab-btn active" id="btn-rep-tab-overview" data-report-tab="overview">
+                <i data-lucide="bar-chart-2"></i> Overview
+              </button>
+              <button type="button" class="tab-btn" id="btn-rep-tab-activity" data-report-tab="activity">
+                <i data-lucide="clipboard-list"></i> Activity History
+              </button>
+              <button type="button" class="tab-btn" id="btn-rep-tab-logs" data-report-tab="logs">
+                <i data-lucide="scroll"></i> Tracking Logs
+              </button>
+              <button type="button" class="tab-btn" id="btn-rep-tab-maintenance" data-report-tab="maintenance">
+                <i data-lucide="wrench"></i> Maintenance Records
+              </button>
+              <button type="button" class="tab-btn" id="btn-rep-tab-exports" data-report-tab="exports">
+                <i data-lucide="download"></i> Reports & Exports
+              </button>
+            </div>
+
+            <!-- Tabs Content Scrollable Area -->
+            <div class="reports-tab-content-area" style="flex: 1; overflow-y: auto; padding-right: 4px;">
+
+              <!-- 1. OVERVIEW TAB -->
+              <div id="rep-sec-overview" class="rep-tab-section">
+                <!-- Widgets Grid -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                  <div class="stat-box"
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center;">
+                    <span
+                      style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Total
+                      Active Devices</span>
+                    <h2 id="report-active-count"
+                      style="font-size: 1.8rem; margin-top: 8px; color: var(--text-primary);">5</h2>
+                  </div>
+                  <div class="stat-box"
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center;">
+                    <span
+                      style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Total
+                      Customers</span>
+                    <h2 id="report-customer-count"
+                      style="font-size: 1.8rem; margin-top: 8px; color: var(--text-primary);">4</h2>
+                  </div>
+                  <div class="stat-box"
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center;">
+                    <span
+                      style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Maintenance
+                      Requests</span>
+                    <h2 id="report-maintenance-count"
+                      style="font-size: 1.8rem; margin-top: 8px; color: var(--text-primary);">1</h2>
+                  </div>
+                  <div class="stat-box"
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center;">
+                    <span
+                      style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">System
+                      Alerts (24h)</span>
+                    <h2 id="report-alerts-count" style="font-size: 1.8rem; margin-top: 8px; color: var(--danger);">3
+                    </h2>
+                  </div>
+                </div>
+                <!-- Additional Overview Charts / Metrics Mock -->
+                <div
+                  style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                  <h4
+                    style="margin-bottom: 12px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-primary);">
+                    Fleet Status Breakdown</h4>
+                  <div
+                    style="display: flex; justify-content: space-around; align-items: center; gap: 16px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                      <div
+                        style="width: 12px; height: 12px; background: #22c55e; border-radius: 50%; display: inline-block; margin-right: 6px;">
+                      </div>
+                      <span style="font-size: 0.75rem; color: var(--text-secondary);">Assigned/Active</span>
+                      <strong style="display: block; font-size: 1.2rem; margin-top: 4px;"
+                        id="rep-breakdown-active">3</strong>
+                    </div>
+                    <div style="text-align: center;">
+                      <div
+                        style="width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; display: inline-block; margin-right: 6px;">
+                      </div>
+                      <span style="font-size: 0.75rem; color: var(--text-secondary);">Available</span>
+                      <strong style="display: block; font-size: 1.2rem; margin-top: 4px;"
+                        id="rep-breakdown-available">1</strong>
+                    </div>
+                    <div style="text-align: center;">
+                      <div
+                        style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%; display: inline-block; margin-right: 6px;">
+                      </div>
+                      <span style="font-size: 0.75rem; color: var(--text-secondary);">Maintenance</span>
+                      <strong style="display: block; font-size: 1.2rem; margin-top: 4px;"
+                        id="rep-breakdown-maintenance">1</strong>
+                    </div>
+                    <div style="text-align: center;">
+                      <div
+                        style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%; display: inline-block; margin-right: 6px;">
+                      </div>
+                      <span style="font-size: 0.75rem; color: var(--text-secondary);">Missing</span>
+                      <strong style="display: block; font-size: 1.2rem; margin-top: 4px;"
+                        id="rep-breakdown-missing">0</strong>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="settings-group">
-                <h4>Telemetry Update Rate</h4>
-                <div class="switch-row">
-                  <span>Auto-refresh map vectors on device shift</span>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
+              <!-- 2. ACTIVITY HISTORY TAB -->
+              <div id="rep-sec-activity" class="rep-tab-section" style="display: none;">
+                <!-- Filter Controls Grid -->
+                <div class="filters-bar-grid"
+                  style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px;">
+                  <div class="form-field-group" style="gap: 4px;" id="rep-filter-grp-device">
+                    <label
+                      style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Device</label>
+                    <select id="filter-history-device"
+                      style="width: 100%; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none;">
+                      <option value="all">All Devices</option>
+                    </select>
+                  </div>
+                  <div class="form-field-group" style="gap: 4px;" id="rep-filter-grp-customer">
+                    <label
+                      style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Customer</label>
+                    <select id="filter-history-customer"
+                      style="width: 100%; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none;">
+                      <option value="all">All Customers</option>
+                    </select>
+                  </div>
+                  <div class="form-field-group" style="gap: 4px;">
+                    <label
+                      style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Status</label>
+                    <select id="filter-history-status"
+                      style="width: 100%; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none;">
+                      <option value="all">All Statuses</option>
+                      <option value="assigned">Assigned</option>
+                      <option value="returned">Returned</option>
+                      <option value="maintenance">Maintenance</option>
+                      <option value="missing">Missing</option>
+                    </select>
+                  </div>
+                  <div class="form-field-group" style="gap: 4px;">
+                    <label
+                      style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Event
+                      Type</label>
+                    <select id="filter-history-type"
+                      style="width: 100%; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none;">
+                      <option value="all">All Types</option>
+                      <option value="assignment">Lease Assignment</option>
+                      <option value="return">Device Return</option>
+                      <option value="maintenance">Maintenance Log</option>
+                      <option value="security">Security Alert</option>
+                    </select>
+                  </div>
+                  <div class="form-field-group" style="gap: 4px;">
+                    <label
+                      style="font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Date
+                      Filter</label>
+                    <input type="date" id="filter-history-date"
+                      style="width: 100%; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0 8px; font-size: 0.75rem; color: var(--text-primary); outline: none; border-color: var(--border-color);">
+                  </div>
                 </div>
-                <div class="switch-row">
-                  <span>Low Data Usage mode (reduces satellite image pings)</span>
-                  <label class="toggle-switch">
-                    <input type="checkbox">
-                    <span class="toggle-slider"></span>
-                  </label>
+
+                <div class="scrollable-table-wrapper">
+                  <div id="mobile-reports-history-list" class="mobile-history-list"></div>
+                  <table class="data-table" id="reports-history-table">
+                    <thead>
+                      <tr>
+                        <th>Date / Time</th>
+                        <th>Transaction ID</th>
+                        <th>Device Model</th>
+                        <th>Assigned Holder</th>
+                        <th>Lease Duration</th>
+                        <th>Warranty Status</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reports-history-table-body">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
-              <div class="settings-group">
-                <h4>Map View Theme</h4>
-                <div class="switch-row">
-                  <span>Auto-sync map theme with dashboard dark/light theme</span>
-                  <label class="toggle-switch">
-                    <input type="checkbox" checked>
-                    <span class="toggle-slider"></span>
-                  </label>
+              <!-- 3. TRACKING LOGS TAB -->
+              <div id="rep-sec-logs" class="rep-tab-section" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <span style="font-size: 0.8rem; color: var(--text-secondary);">Live telemetry coordinates and ping
+                    feed logs.</span>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-tracking-logs"
+                    style="height: 28px; font-size: 0.7rem; padding: 0 10px;">Clear Feed</button>
+                </div>
+                <div class="scrollable-table-wrapper"
+                  style="max-height: 400px; border: 1px solid var(--border-color); border-radius: 8px;">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Timestamp</th>
+                        <th>Device Code</th>
+                        <th>Location Landmark</th>
+                        <th>Coordinates</th>
+                        <th>Speed</th>
+                        <th>Battery</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tracking-logs-table-body">
+                      <!-- Telemetry logs drawn dynamically -->
+                    </tbody>
+                  </table>
                 </div>
               </div>
+
+              <!-- 4. MAINTENANCE RECORDS TAB -->
+              <div id="rep-sec-maintenance" class="rep-tab-section" style="display: none;">
+                <div class="scrollable-table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Date Resolved</th>
+                        <th>Device ID</th>
+                        <th>Serial Number</th>
+                        <th>Diagnostic Issue</th>
+                        <th>Assigned Repairer</th>
+                        <th>Service Location</th>
+                        <th>Repaired Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="rep-maintenance-table-body">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 5. REPORTS & EXPORTS TAB -->
+              <div id="rep-sec-exports" class="rep-tab-section" style="display: none;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                  <div
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center;">
+                    <i data-lucide="file-text"
+                      style="width: 32px; height: 32px; color: var(--accent); margin-bottom: 8px;"></i>
+                    <h5 style="font-weight: 700; margin-bottom: 6px; color: var(--text-primary);">Compile PDF Report
+                    </h5>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px;">Download a
+                      compiled PDF containing fleet status, customer directory details, and active notifications.</p>
+                    <button class="btn btn-primary btn-sm"
+                      onclick="alert('PDF Status Report has been compiled and downloaded.')">
+                      <i data-lucide="download" style="width: 12px; height: 12px; margin-right: 4px;"></i> Download PDF
+                    </button>
+                  </div>
+                  <div
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center;">
+                    <i data-lucide="file-spreadsheet"
+                      style="width: 32px; height: 32px; color: var(--accent-blue); margin-bottom: 8px;"></i>
+                    <h5 style="font-weight: 700; margin-bottom: 6px; color: var(--text-primary);">Export Historical Data
+                    </h5>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px;">Export all device
+                      activity logs, coordinates telemetry pings, and transaction details into Excel format.</p>
+                    <button class="btn btn-primary btn-sm"
+                      onclick="alert('Excel History spreadsheet has been compiled and exported.')"
+                      style="background-color: var(--accent-blue);">
+                      <i data-lucide="download" style="width: 12px; height: 12px; margin-right: 4px;"></i> Export Excel
+                    </button>
+                  </div>
+                  <div
+                    style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center; grid-column: span 2;">
+                    <h5 style="font-weight: 700; margin-bottom: 8px; color: var(--text-primary); text-align: left;">
+                      Available Specialty Reports</h5>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: left;">
+                      <button class="btn btn-secondary btn-sm"
+                        onclick="alert('Specialty Device Utilization Report generated.')">Device Utilization</button>
+                      <button class="btn btn-secondary btn-sm"
+                        onclick="alert('Specialty Customer Activity Report generated.')">Customer Activity</button>
+                      <button class="btn btn-secondary btn-sm"
+                        onclick="alert('Specialty Alerts Frequency Report generated.')">Alerts Analysis</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAINTENANCE MANAGEMENT OVERLAY DRAWER -->
+      <div id="view-maintenance" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card">
+          <div class="drawer-modal-header">
+            <h3>Maintenance & Diagnostics</h3>
+            <button class="btn-close-drawer" data-close-drawer="maintenance"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body scrollable-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Device Model</th>
+                  <th>Device ID</th>
+                  <th>Serial Number</th>
+                  <th>Diagnostic Issue</th>
+                  <th>Assigned Repairer</th>
+                  <th>Last Serviced</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="maintenance-table-body">
+                <!-- Javascript draws maintenance devices -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- OFFLINE DEVICES OVERLAY DRAWER -->
+      <div id="view-offline-devices" class="overlay-drawer-modal" style="display: none;">
+        <div class="drawer-modal-card" style="max-height: 85vh; height: 750px;">
+          <div class="drawer-modal-header">
+            <h3>Offline Devices</h3>
+            <button class="btn-close-drawer" data-close-drawer="offline-devices"><i data-lucide="x"></i></button>
+          </div>
+          <div class="drawer-modal-body"
+            style="display: flex; flex-direction: column; height: calc(100% - 60px); overflow: hidden; padding-bottom: 20px;">
+            <div style="margin-bottom: 12px; font-size: 0.8rem; color: var(--text-secondary);">
+              Devices that have lost active connection or stopped sending telemetry updates.
+            </div>
+            <div class="scrollable-table-wrapper" style="flex: 1; overflow-y: auto;">
+              <div id="mobile-offline-devices-list" class="mobile-history-list"></div>
+              <table class="data-table" id="offline-devices-table">
+                <thead>
+                  <tr>
+                    <th>Device Name</th>
+                    <th>Device ID</th>
+                    <th>Serial Number</th>
+                    <th>Assigned Customer</th>
+                    <th>Battery</th>
+                    <th>Last Known Location</th>
+                    <th>Last Online</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="offline-devices-table-body">
+                  <!-- Javascript draws offline devices dynamically -->
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -711,20 +1591,12 @@
       <!-- Fixed Mobile Bottom Navigation Bar -->
       <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
         <a href="#" class="nav-menu-item active" data-tab="live-tracking">
-          <i data-lucide="monitor"></i>
-          <span>Tracking</span>
+          <i data-lucide="home"></i>
+          <span>Dashboard</span>
         </a>
         <a href="#" class="nav-menu-item" data-tab="devices">
-          <i data-lucide="cpu"></i>s
+          <i data-lucide="cpu"></i>
           <span>Devices</span>
-        </a>
-        <a href="#" class="nav-menu-item" data-tab="customers">
-          <i data-lucide="users"></i>
-          <span>Customers</span>
-        </a>
-        <a href="#" class="nav-menu-item" data-tab="history">
-          <i data-lucide="clipboard-list"></i>
-          <span>History</span>
         </a>
         <a href="#" class="nav-menu-item" data-tab="alerts">
           <i data-lucide="bell"></i>
@@ -766,19 +1638,190 @@
     </div>
   </div>
 
-  <!-- Leaflet Map JS API -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Simulated Dial Pad / Call Information Modal -->
+  <div id="call-modal" class="modal-overlay" style="display: none;">
+    <div class="call-modal-card">
+      <div class="call-modal-header">
+        <h3 id="call-modal-title">Calling Holder</h3>
+        <button class="btn-close-modal" id="btn-close-call-modal" aria-label="Close Dialer">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
 
-  <!-- Firebase App & Database SDKs (Compat version for simple global use) -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+      <!-- Mobile Dial Pad View -->
+      <div id="call-mobile-view" class="call-view-section">
+        <div class="dialer-screen">
+          <div class="dialer-avatar-wrapper">
+            <img id="dialer-holder-avatar"
+              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+              alt="Avatar">
+          </div>
+          <div class="dialer-holder-name" id="dialer-holder-name">Holder Name</div>
+          <div class="dialer-phone-number" id="dialer-phone-number">+91 00000 00000</div>
+          <div class="dialer-status" id="dialer-status">Ready to Call</div>
+        </div>
 
-  <!-- Firebase Configuration -->
-  <script src="firebase-config.js"></script>
+        <div class="dial-pad-grid">
+          <button class="dial-key" data-key="1">1<span>&nbsp;</span></button>
+          <button class="dial-key" data-key="2">2<span>ABC</span></button>
+          <button class="dial-key" data-key="3">3<span>DEF</span></button>
+          <button class="dial-key" data-key="4">4<span>GHI</span></button>
+          <button class="dial-key" data-key="5">5<span>JKL</span></button>
+          <button class="dial-key" data-key="6">6<span>MNO</span></button>
+          <button class="dial-key" data-key="7">7<span>PQRS</span></button>
+          <button class="dial-key" data-key="8">8<span>TUV</span></button>
+          <button class="dial-key" data-key="9">9<span>WXYZ</span></button>
+          <button class="dial-key" data-key="*">*<span>&nbsp;</span></button>
+          <button class="dial-key" data-key="0">0<span>+</span></button>
+          <button class="dial-key" data-key="#">#<span>&nbsp;</span></button>
+        </div>
 
-  <!-- Application Controller script -->
-  <script src="app.js"></script>
+        <div class="dialer-actions">
+          <button class="dialer-btn cancel" id="btn-dialer-cancel">
+            <i data-lucide="phone-off"></i>
+            <span>Cancel</span>
+          </button>
+          <button class="dialer-btn call" id="btn-dialer-call">
+            <i data-lucide="phone"></i>
+            <span>Call</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Info View -->
+      <div id="call-desktop-view" class="call-view-section" style="display: none; width: 100%;">
+        <div class="desktop-call-card">
+          <img id="desktop-call-avatar"
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg>"
+            alt="Avatar" class="desktop-call-avatar">
+          <h4 id="desktop-call-name">Holder Name</h4>
+          <p id="desktop-call-email">email@example.com</p>
+          <div class="desktop-call-phone-wrapper">
+            <i data-lucide="phone" class="phone-icon"></i>
+            <span id="desktop-call-phone">+91 00000 00000</span>
+          </div>
+          <p class="desktop-call-hint">Initiate direct phone calling protocol using your system dialer.</p>
+          <div class="desktop-call-actions">
+            <button class="btn btn-secondary" id="btn-desktop-call-cancel">Cancel</button>
+            <a href="#" class="btn btn-primary" id="btn-desktop-call-link">
+              <i data-lucide="phone"></i> Start Call
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Customer Onboarding Credentials Summary Modal -->
+    <div id="customer-summary-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-card" style="max-width: 550px; text-align: left; align-items: stretch; padding: 28px;">
+        <div
+          style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+          <div class="modal-icon"
+            style="background-color: rgba(34, 197, 94, 0.1); color: var(--success); margin-bottom: 0; width: 44px; height: 44px;">
+            <i data-lucide="check-circle" style="width: 22px; height: 22px;"></i>
+          </div>
+          <div>
+            <h2 style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 2px;">Customer
+              Onboarding Summary</h2>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0;">Account and device
+              credentials generated successfully.</p>
+          </div>
+        </div>
+
+        <div class="summary-details" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+          <div
+            style="display: grid; grid-template-columns: 140px 1fr; gap: 8px; font-size: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 8px;">
+            <span style="color: var(--text-secondary); font-weight: 600;">Customer Name:</span>
+            <span id="summary-cust-name" style="color: var(--text-primary); font-weight: 700;"></span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 140px 1fr; gap: 8px; font-size: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 8px;">
+            <span style="color: var(--text-secondary); font-weight: 600;">Email Address:</span>
+            <span id="summary-cust-email" style="color: var(--text-primary);"></span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 140px 1fr; gap: 8px; font-size: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 8px;">
+            <span style="color: var(--text-secondary); font-weight: 600;">Mobile Number:</span>
+            <span id="summary-cust-phone" style="color: var(--text-primary);"></span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 140px 1fr; gap: 8px; font-size: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 8px;">
+            <span style="color: var(--text-secondary); font-weight: 600;">Assigned Device:</span>
+            <span id="summary-device-name" style="color: var(--text-primary); font-weight: 700;"></span>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 140px 1fr; gap: 8px; font-size: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 8px; align-items: center;">
+            <span style="color: var(--text-secondary); font-weight: 600;">Serial Number:</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="summary-serial-number" class="fleet-card-plate"
+                style="width: fit-content; font-size: 0.75rem; margin-bottom: 0;"></span>
+              <button type="button" class="btn-copy-summary" data-target="summary-serial-number"
+                title="Copy Serial Number"
+                style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px; border-radius: 4px; transition: all 0.2s;">
+                <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 140px 1fr; gap: 8px; font-size: 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 8px; align-items: center;">
+            <span style="color: var(--text-secondary); font-weight: 600;">Device Code:</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="summary-device-code"
+                style="color: var(--accent); font-weight: 800; font-family: var(--font-mono); font-size: 0.85rem;"></span>
+              <button type="button" class="btn-copy-summary" data-target="summary-device-code" title="Copy Device Code"
+                style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px; border-radius: 4px; transition: all 0.2s;">
+                <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+              </button>
+              <button type="button" class="btn-share-summary" title="Share Credentials"
+                style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px; border-radius: 4px; transition: all 0.2s;">
+                <i data-lucide="share-2" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
+          </div>
+          <div
+            style="background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-top: 8px;">
+            <h4
+              style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--accent);"></i> Customer Login Info
+            </h4>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">
+              <strong>Username:</strong> <span id="summary-login-username"></span>
+            </p>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">
+              <strong>Device Code:</strong> <span id="summary-login-code"
+                style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);"></span>
+            </p>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0;">
+              <strong>Default Password:</strong> <span
+                style="font-family: var(--font-mono); color: var(--text-primary);">user123</span> (or any valid 8+
+              character password)
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <button type="button" class="btn btn-secondary" id="btn-copy-all-summary"
+            style="padding: 0 16px; height: 38px; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="copy" style="width: 14px; height: 14px;"></i> Copy All
+          </button>
+          <button class="btn btn-primary" id="btn-close-summary-modal" style="padding: 0 24px; height: 38px;">Done &
+            Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaflet Map JS API -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Firebase App & Database SDKs (Compat version for simple global use) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Application Controller script -->
+    <script src="app.js"></script>
 </body>
 
 </html>
